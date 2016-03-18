@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/widget_word"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:text="School" />
+
+        <TextView
+            android:id="@+id/tvWordType"
+            android:layout_toRightOf="@+id/tvWord"
+            android:text="(n)"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="5dp"
+            android:textStyle="italic"
+            android:textSize="@dimen/widget_meaning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageButton
+            android:id="@+id/btnSpeaker"
+            android:layout_width="24dp"
+            android:layout_height="22dp"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/tvWordType"
+            android:src="@drawable/speaker" />
+
+        <TextView
+            android:id="@+id/tvSample"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvWord"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/widget_meaning"
+            android:text="sample" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ttitudeiseverything"
+            android:layout_below="@+id/tvSample"
+            android:layout_margin="15dp"
+            android:layout_marginTop="35dp"/>
+
+        <ImageButton
+            android:id="@+id/btnNext"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="8dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/arrows_16" />
+    </RelativeLayout>
+</FrameLayout>

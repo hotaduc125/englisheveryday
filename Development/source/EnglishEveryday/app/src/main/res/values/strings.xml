@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">EnglishEveryday</string>
+    <string name="setting">Settings</string>
+    <string name="setting_text">The bellow references with apply for the widget</string>
+    <string name="refresh_interval">Refresh Interval</string>
+    <string name="enable_speaker">Enable Speaker</string>
+    <string name="pronounce_word">The app will help to pronounce the word</string>
+    <string name="notification">Notification</string>
+    <string name="notification_text">The app will notify you when we got a new word</string>
+</resources>
