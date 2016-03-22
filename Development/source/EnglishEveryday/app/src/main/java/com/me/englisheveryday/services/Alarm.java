@@ -32,8 +32,6 @@ public class Alarm extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
-
     }
 
     private static PendingIntent getAlarmIntent(Context context){
