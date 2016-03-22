@@ -21,6 +21,7 @@ import com.me.englisheveryday.R;
 import com.me.englisheveryday.activity.DictionaryActivity;
 import com.me.englisheveryday.activity.SettingsActivity;
 import com.me.englisheveryday.services.SpeechService;
+import com.me.englisheveryday.utils.Constant;
 import com.me.englisheveryday.utils.SessionManager;
 import com.me.englisheveryday.utils.Utilities;
 
@@ -43,6 +44,7 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
     public static final String UPDATE_BY_CLICKING = "update_clicking";
     public static final String SPEAKER = "speaker";
     public static final String UPDATE_BY_ALARM = "update_alarm";
+    public static final String WIDGET_CLICKING = "widget_clicking";
 
 
     @Override
@@ -58,8 +60,16 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
     }
 
 
+    /**
+     * update content of widget include click event on widget
+     * @param context
+     * @param appWidgetManager
+     * @param appWidgetId
+     * @throws JSONException
+     */
     private void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) throws JSONException {
-        ArrayList<String> content = getNewWord(context);
+        SessionManager sessionManager = new SessionManager(context);
+        ArrayList<String> content = getNewWord(context, sessionManager.getIndex());
         String word = content.get(0);
         String sample = content.get(1);
         String type = content.get(2);
@@ -68,7 +78,7 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
         views.setTextViewText(R.id.tvSample, Html.fromHtml(sample));
         views.setTextViewText(R.id.tvWordType, type);
         views.setOnClickPendingIntent(R.id.btnNext, getPendingSeftIntent(context, UPDATE_BY_CLICKING));
-        SessionManager sessionManager = new SessionManager(context);
+        views.setOnClickPendingIntent(R.id.widget_layout, getPendingSeftIntent(context, WIDGET_CLICKING));
         if (sessionManager.isSpeakerEnabled()) {
             views.setViewVisibility(R.id.btnSpeaker, View.VISIBLE);
             views.setOnClickPendingIntent(R.id.btnSpeaker, getPendingSeftIntent(context, SPEAKER, word));
@@ -78,18 +88,24 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
-    private ArrayList<String> getNewWord(Context context) throws JSONException {
+    private ArrayList<String> getNewWord(Context context, int index) throws JSONException {
         ArrayList<String> newWord = new ArrayList<>();
-        SessionManager sessionManager = new SessionManager(context);
         String content = Utilities.getInstance().readJSONFromAsset(context);
         JSONArray jsonArray = new JSONArray(content);
-        newWord.add(0, jsonArray.getJSONObject(sessionManager.getIndex()).getJSONObject("newword").getString("word"));
-        newWord.add(1, jsonArray.getJSONObject(sessionManager.getIndex()).getJSONObject("newword").getString("sample"));
-        newWord.add(2, jsonArray.getJSONObject(sessionManager.getIndex()).getJSONObject("newword").getString("type"));
-        newWord.add(3, jsonArray.getJSONObject(sessionManager.getIndex()).getJSONObject("newword").getString("notification"));
+        newWord.add(0, jsonArray.getJSONObject(index).getJSONObject("newword").getString("word"));
+        newWord.add(1, jsonArray.getJSONObject(index).getJSONObject("newword").getString("sample"));
+        newWord.add(2, jsonArray.getJSONObject(index).getJSONObject("newword").getString("type"));
+        newWord.add(3, jsonArray.getJSONObject(index).getJSONObject("newword").getString("notification"));
         return newWord;
     }
 
+    /**
+     * set pending intent for updating widget.
+     * @param context
+     * @param action
+     * @param content
+     * @return
+     */
     private static PendingIntent getPendingSeftIntent(Context context, String action, String... content) {
         Intent intent = new Intent(context, EnglishWidgetProvider.class);
         intent.setAction(action);
@@ -99,6 +115,10 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
         return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
+    /**
+     * update content of  widget
+     * @param context
+     */
     private void update(Context context) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         ComponentName componentName = new ComponentName(context.getPackageName(), getClass().getName());
@@ -106,6 +126,13 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
         onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
+    /**
+     * Fire local notification
+     * @param context
+     * @param title
+     * @param content
+     * @param ticker
+     */
     private void fireNotification(Context context, String title, String content, String ticker) {
         Intent notificationIntent = new Intent(context, DictionaryActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
@@ -136,7 +163,7 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
                 context.startService(speakIntent);
                 break;
             case UPDATE_BY_CLICKING:
-                if (sessionManager.getIndex() != 40) {
+                if (sessionManager.getIndex() != Constant.WORD_INDEX) {
                     sessionManager.setIndex(sessionManager.getIndex() + 1);
                 } else {
                     sessionManager.setIndex(0);
@@ -144,7 +171,7 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
                 update(context);
                 break;
             case UPDATE_BY_ALARM:
-                if (sessionManager.getIndex() != 46) {
+                if (sessionManager.getIndex() != Constant.WORD_INDEX) {
                     sessionManager.setIndex(sessionManager.getIndex() + 1);
                 } else {
                     sessionManager.setIndex(0);
@@ -158,7 +185,7 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
                 if (sessionManager.isNotified()) {
                     ArrayList<String> content = null;
                     try {
-                        content = getNewWord(context);
+                        content = getNewWord(context, sessionManager.getIndex());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -167,6 +194,18 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
                     String notification = content.get(3);
                     fireNotification(context, word, sample, notification);
                 }
+                break;
+            case WIDGET_CLICKING:
+//                ArrayList<String> content = null;
+//                try {
+//                    content = getNewWord(context, sessionManager.getIndex());
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                String word = content.get(0);
+                context.startActivity(new Intent(context, DictionaryActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                /*.putExtra("WORD", word)*/);
                 break;
             default:
                 super.onReceive(context, intent);
