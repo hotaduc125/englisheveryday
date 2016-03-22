@@ -148,14 +148,16 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
                 .setLights(Color.YELLOW, 3000, 3000)
-                .setContentIntent(pendingIntent).build();
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .build();
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, notification);
     }
 
     @Override
-    public void onReceive(Context context, Intent intent) {
-        SessionManager sessionManager = new SessionManager(context);
+    public void onReceive(final Context context, Intent intent) {
+        final SessionManager sessionManager = new SessionManager(context);
         switch (intent.getAction()) {
             case SPEAKER:
                 Intent speakIntent = new Intent(context, SpeechService.class);
@@ -183,16 +185,22 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
                     e.printStackTrace();
                 }
                 if (sessionManager.isNotified()) {
-                    ArrayList<String> content = null;
-                    try {
-                        content = getNewWord(context, sessionManager.getIndex());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    String word = content.get(0);
-                    String sample = content.get(1);
-                    String notification = content.get(3);
-                    fireNotification(context, word, sample, notification);
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            super.run();
+                            ArrayList<String> content = null;
+                            try {
+                                content = getNewWord(context, sessionManager.getIndex());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            String word = content.get(0);
+                            String sample = content.get(1);
+                            String notification = content.get(3);
+                            fireNotification(context, word, sample, notification);
+                        }
+                    }.start();
                 }
                 break;
             case WIDGET_CLICKING:
@@ -204,7 +212,7 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
 //                }
 //                String word = content.get(0);
                 context.startActivity(new Intent(context, DictionaryActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 /*.putExtra("WORD", word)*/);
                 break;
             default:

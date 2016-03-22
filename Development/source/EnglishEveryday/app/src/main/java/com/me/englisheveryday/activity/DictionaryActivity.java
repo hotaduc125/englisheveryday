@@ -1,19 +1,14 @@
 package com.me.englisheveryday.activity;
 
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.me.englisheveryday.R;
 import com.me.englisheveryday.utils.SessionManager;
@@ -23,8 +18,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -43,15 +36,21 @@ public class DictionaryActivity extends AppCompatActivity {
     @Bind(R.id.tvDicWordType)
     TextView tvDicWordType;
 
+    SessionManager sessionManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dictionary);
         ButterKnife.bind(this);
-        SessionManager sessionManager = new SessionManager(this);
+        sessionManager = new SessionManager(this);
+        displayWordDefinition();
+    }
+
+    private void displayWordDefinition(){
         ArrayList<String> content = null;
         try {
-            content = getNewWord(this, 1);
+            content = getNewWord(this, sessionManager.getIndex());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -74,7 +73,19 @@ public class DictionaryActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        displayWordDefinition();
+    }
 
+    /**
+     * get new word from json file by index
+     * @param context
+     * @param index
+     * @return
+     * @throws JSONException
+     */
     private ArrayList<String> getNewWord(Context context, int index) throws JSONException {
         ArrayList<String> newWord = new ArrayList<>();
         String content = Utilities.getInstance().readJSONFromAsset(context);
