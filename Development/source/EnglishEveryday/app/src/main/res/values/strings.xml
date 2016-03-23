@@ -7,4 +7,7 @@
     <string name="pronounce_word">The app will help to pronounce the word</string>
     <string name="notification">Notification</string>
     <string name="notification_text">The app will notify you when we got a new word</string>
+
+    <!-- AdMob banner ad unit IDs -->
+    <string name="banner_home_footer">ca-app-pub-6099219057812642/2195104814</string>
 </resources>

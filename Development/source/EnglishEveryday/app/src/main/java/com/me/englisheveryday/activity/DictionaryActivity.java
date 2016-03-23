@@ -10,6 +10,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.me.englisheveryday.R;
 import com.me.englisheveryday.utils.SessionManager;
 import com.me.englisheveryday.utils.Utilities;
@@ -38,16 +40,22 @@ public class DictionaryActivity extends AppCompatActivity {
 
     SessionManager sessionManager;
 
+    private AdView adView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dictionary);
         ButterKnife.bind(this);
         sessionManager = new SessionManager(this);
+        adView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        adView.loadAd(adRequest);
         displayWordDefinition();
     }
 
-    private void displayWordDefinition(){
+    private void displayWordDefinition() {
         ArrayList<String> content = null;
         try {
             content = getNewWord(this, sessionManager.getIndex());
@@ -58,6 +66,14 @@ public class DictionaryActivity extends AppCompatActivity {
         tvDicWord.setText(content.get(0));
         tvDicSpelling.setText(content.get(1));
         tvDicWordType.setText(content.get(3));
+    }
+
+    @Override
+    protected void onPause() {
+        if (adView != null) {
+            adView.pause();
+        }
+        super.onPause();
     }
 
     @Override
@@ -77,10 +93,22 @@ public class DictionaryActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         displayWordDefinition();
+        if (adView != null) {
+            adView.resume();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
     }
 
     /**
      * get new word from json file by index
+     *
      * @param context
      * @param index
      * @return

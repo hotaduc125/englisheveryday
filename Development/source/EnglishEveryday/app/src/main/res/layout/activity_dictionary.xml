@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,9 +19,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="word"
-            android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:textSize="@dimen/widget_word"
-            android:textColor="@android:color/black" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvDicWordType"
@@ -28,17 +29,17 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="6dp"
-            android:textSize="@dimen/widget_meaning"
             android:layout_toRightOf="@id/tvDicWord"
-            android:text="wordtype" />
+            android:text="wordtype"
+            android:textSize="@dimen/widget_meaning" />
 
         <TextView
             android:id="@+id/tvDicSpelling"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvDicWord"
-            android:textSize="@dimen/widget_meaning"
-            android:text="spelling" />
+            android:text="spelling"
+            android:textSize="@dimen/widget_meaning" />
 
         <TextView
             android:id="@+id/tvMeaning"
@@ -48,5 +49,13 @@
             android:layout_marginTop="10dp"
             android:text="1323123133131"
             android:textColor="@android:color/black" />
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/banner_home_footer"></com.google.android.gms.ads.AdView>
     </RelativeLayout>
 </ScrollView>
