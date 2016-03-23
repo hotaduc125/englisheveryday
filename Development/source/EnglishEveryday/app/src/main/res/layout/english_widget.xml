@@ -54,13 +54,13 @@
             android:textSize="@dimen/widget_meaning"
             android:text="sample" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ttitudeiseverything"
-            android:layout_below="@+id/tvSample"
-            android:layout_margin="15dp"
-            android:layout_marginTop="35dp"/>
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/ttitudeiseverything"-->
+            <!--android:layout_below="@+id/tvSample"-->
+            <!--android:layout_margin="15dp"-->
+            <!--android:layout_marginTop="35dp"/>-->
 
         <ImageButton
             android:id="@+id/btnNext"

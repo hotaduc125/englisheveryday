@@ -22,28 +22,7 @@
         android:layout_marginTop="10dp"
         android:background="@android:color/darker_gray" />
 
-    <LinearLayout
-        android:id="@+id/intervalLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/refresh_interval"
-            android:textSize="@dimen/interval_text"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvInterval"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="1 hour"
-            android:textSize="@dimen/setting_text_size" />
-    </LinearLayout>
+    <include layout="@layout/refresh_interval" />
 
     <View
         android:layout_width="match_parent"
@@ -51,35 +30,7 @@
         android:layout_marginTop="10dp"
         android:background="@android:color/darker_gray" />
 
-    <RelativeLayout
-        android:id="@+id/speakerLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/speakerText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp"
-            android:textSize="@dimen/interval_text"
-            android:text="@string/enable_speaker" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/speakerText"
-            android:textSize="@dimen/setting_text_size"
-            android:layout_marginTop="5dp"
-            android:text="@string/pronounce_word" />
-
-        <CheckBox
-            android:id="@+id/cbSpeaker"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="7dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true" />
-    </RelativeLayout>
+    <include layout="@layout/enable_speaker" />
 
     <View
         android:layout_width="match_parent"
@@ -87,35 +38,7 @@
         android:layout_marginTop="10dp"
         android:background="@android:color/darker_gray" />
 
-    <RelativeLayout
-        android:id="@+id/notificationLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/notifyText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp"
-            android:textSize="@dimen/interval_text"
-            android:text="@string/notification" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/notifyText"
-            android:textSize="@dimen/setting_text_size"
-            android:layout_marginTop="5dp"
-            android:text="@string/notification_text" />
-
-        <CheckBox
-            android:id="@+id/cbNotification"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="7dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true" />
-    </RelativeLayout>
+    <include layout="@layout/notification" />
 
     <View
         android:layout_width="match_parent"

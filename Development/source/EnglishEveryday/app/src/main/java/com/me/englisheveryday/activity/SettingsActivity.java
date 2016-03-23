@@ -1,7 +1,9 @@
 package com.me.englisheveryday.activity;
 
 import android.app.AlarmManager;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -55,6 +57,9 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 sessionManager.setSpeakerEnable(isChecked);
+                if(isChecked){
+                    Toast.makeText(SettingsActivity.this, "Speaker icon will apply from new word's appearance", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -69,10 +74,6 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
-        if (!sessionManager.isStartAlarmFromBegining()) {
-            Alarm.getInstance().setAlarm(this);
-        }
-
     }
 
     @OnClick(R.id.intervalLayout)
@@ -117,6 +118,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     /**
      * get interval in millisecond by position.
+     *
      * @param position
      * @return
      */
@@ -136,6 +138,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     /**
      * get position from selected interval
+     *
      * @param value
      * @return
      */
@@ -174,7 +177,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        System.exit(1);
-        super.onBackPressed();
+        this.finish();
     }
 }

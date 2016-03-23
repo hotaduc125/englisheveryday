@@ -33,7 +33,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/simple_widget_info" />
         </receiver>
-
         <activity android:name=".activity.DictionaryActivity">
 
         </activity>

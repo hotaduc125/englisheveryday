@@ -20,6 +20,7 @@ import android.widget.RemoteViews;
 import com.me.englisheveryday.R;
 import com.me.englisheveryday.activity.DictionaryActivity;
 import com.me.englisheveryday.activity.SettingsActivity;
+import com.me.englisheveryday.services.Alarm;
 import com.me.englisheveryday.services.SpeechService;
 import com.me.englisheveryday.utils.Constant;
 import com.me.englisheveryday.utils.SessionManager;
@@ -49,6 +50,7 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+
         final int N = appWidgetIds.length;
         for (int i = 0; i < N; i++) {
             try {
@@ -62,6 +64,7 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
 
     /**
      * update content of widget include click event on widget
+     *
      * @param context
      * @param appWidgetManager
      * @param appWidgetId
@@ -101,6 +104,7 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
 
     /**
      * set pending intent for updating widget.
+     *
      * @param context
      * @param action
      * @param content
@@ -117,6 +121,7 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
 
     /**
      * update content of  widget
+     *
      * @param context
      */
     private void update(Context context) {
@@ -128,6 +133,7 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
 
     /**
      * Fire local notification
+     *
      * @param context
      * @param title
      * @param content
@@ -185,7 +191,7 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
                     e.printStackTrace();
                 }
                 if (sessionManager.isNotified()) {
-                    new Thread(){
+                    new Thread() {
                         @Override
                         public void run() {
                             super.run();
@@ -204,19 +210,22 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
                 }
                 break;
             case WIDGET_CLICKING:
-//                ArrayList<String> content = null;
-//                try {
-//                    content = getNewWord(context, sessionManager.getIndex());
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                String word = content.get(0);
                 context.startActivity(new Intent(context, DictionaryActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                /*.putExtra("WORD", word)*/);
+                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 break;
             default:
                 super.onReceive(context, intent);
         }
+    }
+
+    @Override
+    public void onEnabled(Context context) {
+        Log.i("EEEEE", "widget was added to home screen");
+        SessionManager sessionManager = new SessionManager(context);
+        if (!sessionManager.isStartAlarmFromBegining()) {
+            Alarm.getInstance().setAlarm(context);
+            sessionManager.setAlarmStart(true);
+        }
+        super.onEnabled(context);
     }
 }
