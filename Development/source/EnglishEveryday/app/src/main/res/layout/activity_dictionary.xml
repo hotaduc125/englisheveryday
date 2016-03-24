@@ -1,61 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.me.englisheveryday.activity.DictionaryActivity">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin">
-
-        <TextView
-            android:id="@+id/tvDicWord"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="word"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/widget_word"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvDicWordType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="6dp"
-            android:layout_toRightOf="@id/tvDicWord"
-            android:text="wordtype"
-            android:textSize="@dimen/widget_meaning" />
-
-        <TextView
-            android:id="@+id/tvDicSpelling"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvDicWord"
-            android:text="spelling"
-            android:textSize="@dimen/widget_meaning" />
-
-        <TextView
-            android:id="@+id/tvMeaning"
+        android:layout_height="match_parent">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/tvDicSpelling"
-            android:layout_marginTop="10dp"
-            android:text="1323123133131"
-            android:textColor="@android:color/black" />
+            android:layout_height="match_parent">
 
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            ads:adSize="BANNER"
-            ads:adUnitId="@string/banner_home_footer"></com.google.android.gms.ads.AdView>
-    </RelativeLayout>
-</ScrollView>
+            <TextView
+                android:id="@+id/tvDicWord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="word"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/widget_word"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDicWordType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="6dp"
+                android:layout_toRightOf="@id/tvDicWord"
+                android:text="wordtype"
+                android:textSize="@dimen/widget_meaning" />
+
+            <TextView
+                android:id="@+id/tvDicSpelling"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvDicWord"
+                android:text="spelling"
+                android:textSize="@dimen/widget_meaning" />
+
+            <TextView
+                android:id="@+id/tvMeaning"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/tvDicSpelling"
+                android:layout_marginTop="10dp"
+                android:text="1323123133131"
+                android:textColor="@android:color/black" />
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_home_footer"></com.google.android.gms.ads.AdView>
+</RelativeLayout>
