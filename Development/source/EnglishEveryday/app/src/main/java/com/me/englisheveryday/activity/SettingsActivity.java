@@ -57,7 +57,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 sessionManager.setSpeakerEnable(isChecked);
-                if(isChecked){
+                if (isChecked) {
                     Toast.makeText(SettingsActivity.this, "Speaker icon will apply from new word's appearance", Toast.LENGTH_SHORT).show();
                 }
             }
