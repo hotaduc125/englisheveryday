@@ -143,7 +143,7 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
         Notification notification = builder.setContentTitle(title)
                 .setContentText(Html.fromHtml(content))
                 .setTicker(ticker)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.ic_launcher)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(Html.fromHtml(content)))
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
