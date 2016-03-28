@@ -19,7 +19,6 @@ import android.widget.RemoteViews;
 
 import com.me.englisheveryday.R;
 import com.me.englisheveryday.activity.DictionaryActivity;
-import com.me.englisheveryday.activity.SettingsActivity;
 import com.me.englisheveryday.services.Alarm;
 import com.me.englisheveryday.services.SpeechService;
 import com.me.englisheveryday.utils.Constant;
@@ -30,23 +29,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.logging.Handler;
 
 /**
  * Created by hotaduc on 3/16/16.
  */
 public class EnglishWidgetProvider extends AppWidgetProvider {
 
-    public static final String UPDATE_BY_CLICKING = "update_clicking";
+    public static final String UPDATE_BY_CLICKING_DOWN = "update_clicking_down";
     public static final String SPEAKER = "speaker";
     public static final String UPDATE_BY_ALARM = "update_alarm";
-    public static final String WIDGET_CLICKING = "widget_clicking";
-
+    public static final String WIDGET_CLICKING_LAYOUT = "widget_clicking_layout";
+    public static final String UPDATE_BY_CLICKING_UP = "update_clicking_up";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -80,8 +73,9 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
         views.setTextViewText(R.id.tvWord, word);
         views.setTextViewText(R.id.tvSample, Html.fromHtml(sample));
         views.setTextViewText(R.id.tvWordType, type);
-        views.setOnClickPendingIntent(R.id.btnNext, getPendingSeftIntent(context, UPDATE_BY_CLICKING));
-        views.setOnClickPendingIntent(R.id.widget_layout, getPendingSeftIntent(context, WIDGET_CLICKING));
+        views.setOnClickPendingIntent(R.id.btnDown, getPendingSeftIntent(context, UPDATE_BY_CLICKING_DOWN));
+        views.setOnClickPendingIntent(R.id.widget_layout, getPendingSeftIntent(context, WIDGET_CLICKING_LAYOUT));
+        views.setOnClickPendingIntent(R.id.btnUp, getPendingSeftIntent(context, UPDATE_BY_CLICKING_UP));
         if (sessionManager.isSpeakerEnabled()) {
             views.setViewVisibility(R.id.btnSpeaker, View.VISIBLE);
             views.setOnClickPendingIntent(R.id.btnSpeaker, getPendingSeftIntent(context, SPEAKER, word));
@@ -170,7 +164,7 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
                 speakIntent.putExtra(SpeechService.WORD, intent.getStringExtra(SpeechService.WORD));
                 context.startService(speakIntent);
                 break;
-            case UPDATE_BY_CLICKING:
+            case UPDATE_BY_CLICKING_DOWN:
                 if (sessionManager.getIndex() != Constant.WORD_INDEX) {
                     sessionManager.setIndex(sessionManager.getIndex() + 1);
                 } else {
@@ -209,9 +203,17 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
                     }.start();
                 }
                 break;
-            case WIDGET_CLICKING:
+            case WIDGET_CLICKING_LAYOUT:
                 context.startActivity(new Intent(context, DictionaryActivity.class)
                                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                break;
+            case UPDATE_BY_CLICKING_UP:
+                if (sessionManager.getIndex() != 0) {
+                    sessionManager.setIndex(sessionManager.getIndex() - 1);
+                } else {
+                    sessionManager.setIndex(Constant.WORD_INDEX);
+                }
+                update(context);
                 break;
             default:
                 super.onReceive(context, intent);

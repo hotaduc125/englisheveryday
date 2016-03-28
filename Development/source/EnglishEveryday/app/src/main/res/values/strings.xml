@@ -3,6 +3,8 @@
     <string name="setting">Settings</string>
     <string name="setting_text">The bellow references with apply for the widget</string>
     <string name="refresh_interval">Refresh Interval</string>
+    <string name="tell_my_friend">Tell My Friends</string>
+    <string name="rate_this_app">Rate This App</string>
     <string name="enable_speaker">Enable Speaker</string>
     <string name="pronounce_word">The app will help to pronounce the word</string>
     <string name="notification">Notification</string>

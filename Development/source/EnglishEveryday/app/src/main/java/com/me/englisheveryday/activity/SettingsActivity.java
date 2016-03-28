@@ -1,9 +1,18 @@
 package com.me.englisheveryday.activity;
 
+import android.app.Activity;
 import android.app.AlarmManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
+import android.os.Parcelable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +25,12 @@ import android.widget.Toast;
 import com.me.englisheveryday.R;
 import com.me.englisheveryday.services.Alarm;
 import com.me.englisheveryday.utils.SessionManager;
+
+import org.w3c.dom.Text;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -37,6 +52,15 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Bind(R.id.tvInterval)
     TextView tvInterval;
+
+    @Bind(R.id.tvVersion)
+    TextView tvVersion;
+
+    // Facebook package
+    public static final String FACEBOOK_PACKAGE = "com.facebook.katana";
+
+    // Twitter package
+    public static final String TWITTER_PACKAGE = "com.twitter.android";
 
     /*
     init shared preferences
@@ -74,6 +98,14 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
+        PackageInfo pInfo = null;
+        try {
+            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        tvVersion.setText("English Flashcard Widget v."+ pInfo.versionName);
     }
 
     @OnClick(R.id.intervalLayout)
@@ -173,6 +205,68 @@ public class SettingsActivity extends AppCompatActivity {
             cbNotification.setChecked(true);
         }
 //        Toast.makeText(this, "" + cbNotification.isChecked(), Toast.LENGTH_LONG).show();
+    }
+
+    @OnClick(R.id.rateLayout)
+    public void rateApp(){
+
+    }
+
+    @OnClick(R.id.tellMyFriendLayout)
+    public void tellMyFriends(){
+        onShareClick(this);
+    }
+
+
+    /**
+     * Sharing image to filtered social apps
+     *
+     * @param mActivity
+     */
+    public static void onShareClick(Activity mActivity) {
+        List<Intent> targetShareIntents = new ArrayList<Intent>();
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.setType("text/plaint");
+        List<ResolveInfo> resInfos = mActivity.getPackageManager().queryIntentActivities(shareIntent, 0);
+        if (!resInfos.isEmpty()) {
+            for (ResolveInfo resInfo : resInfos) {
+                String packageName = resInfo.activityInfo.packageName;
+                Log.i("Package Name", packageName);
+                if (packageName.contains(TWITTER_PACKAGE) || packageName.contains(FACEBOOK_PACKAGE)) {
+                    Intent intent = new Intent();
+                    intent.setComponent(new ComponentName(packageName, resInfo.activityInfo.name));
+                    intent.setAction(Intent.ACTION_SEND);
+                    intent.setType("text/plaint");
+                    intent.putExtra(Intent.EXTRA_TEXT, "my app url");
+                    // Create the URI from the media
+                    intent.setPackage(packageName);
+                    targetShareIntents.add(intent);
+                }
+            }
+            if (!targetShareIntents.isEmpty()) {
+                Intent chooserIntent = Intent.createChooser(targetShareIntents.remove(0), "Choose app to share");
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetShareIntents.toArray(new Parcelable[]{}));
+                mActivity.startActivity(chooserIntent);
+            } else {
+                showWarningDialog(mActivity, "There is no social media installed");
+            }
+        }
+    }
+
+    /**
+     * Display dialog to ask if user want to quit game.
+     */
+    public static void showWarningDialog(Context context, String msg) {
+        new android.app.AlertDialog.Builder(context)
+                .setMessage(msg)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setCancelable(false)
+                .show();
     }
 
     @Override

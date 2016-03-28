@@ -33,8 +33,18 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="6dp"
                 android:layout_toRightOf="@id/tvDicWord"
-                android:text="wordtype"
+                android:text="(n)"
                 android:textSize="@dimen/widget_meaning" />
+
+            <ImageButton
+                android:id="@+id/btnDicSpeaker"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@+id/tvDicWordType"
+                android:background="@android:color/transparent"
+                android:src="@drawable/technology" />
 
             <TextView
                 android:id="@+id/tvDicSpelling"

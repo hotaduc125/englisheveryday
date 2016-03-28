@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.me.englisheveryday.R;
+import com.me.englisheveryday.services.SpeechService;
 import com.me.englisheveryday.utils.SessionManager;
 import com.me.englisheveryday.utils.Utilities;
 
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DictionaryActivity extends AppCompatActivity {
 
@@ -47,6 +49,7 @@ public class DictionaryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dictionary);
         ButterKnife.bind(this);
+        getSupportActionBar().setTitle("Meaning");
         sessionManager = new SessionManager(this);
         adView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
@@ -92,7 +95,7 @@ public class DictionaryActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        displayWordDefinition();
+//        displayWordDefinition();
         if (adView != null) {
             adView.resume();
         }
@@ -123,5 +126,12 @@ public class DictionaryActivity extends AppCompatActivity {
         newWord.add(2, jsonArray.getJSONObject(index).getJSONObject("newword").getString("meaning"));
         newWord.add(3, jsonArray.getJSONObject(index).getJSONObject("newword").getString("type"));
         return newWord;
+    }
+
+    @OnClick(R.id.btnDicSpeaker)
+    public void speakerAction(){
+        Intent speakIntent = new Intent(this, SpeechService.class);
+        speakIntent.putExtra(SpeechService.WORD, tvDicWord.getText());
+        this.startService(speakIntent);
     }
 }

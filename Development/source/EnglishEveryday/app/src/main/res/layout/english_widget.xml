@@ -1,46 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:id="@+id/widget_layout"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:alpha="0.8"
+        android:background="@drawable/old_page">
 
         <TextView
             android:id="@+id/tvWord"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/widget_word"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="School"
             android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:text="School" />
+            android:textSize="@dimen/widget_word"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvWordType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="16dp"
             android:layout_toRightOf="@+id/tvWord"
             android:text="(n)"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="5dp"
-            android:textStyle="italic"
+            android:textColor="@android:color/tab_indicator_text"
             android:textSize="@dimen/widget_meaning"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textStyle="italic" />
 
         <ImageButton
             android:id="@+id/btnSpeaker"
-            android:layout_width="24dp"
+            android:layout_width="wrap_content"
             android:layout_height="22dp"
-            android:background="@android:color/transparent"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="15dp"
+            android:layout_marginTop="12dp"
             android:layout_toRightOf="@+id/tvWordType"
-            android:src="@drawable/speaker" />
+            android:background="@android:color/transparent"
+            android:src="@drawable/technology" />
 
         <TextView
             android:id="@+id/tvSample"
@@ -49,28 +51,33 @@
             android:layout_below="@+id/tvWord"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="4dp"
+            android:text="sample"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/widget_meaning"
-            android:text="sample" />
+            android:textSize="@dimen/widget_meaning" />
 
-        <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:src="@drawable/ttitudeiseverything"-->
-            <!--android:layout_below="@+id/tvSample"-->
-            <!--android:layout_margin="15dp"-->
-            <!--android:layout_marginTop="35dp"/>-->
-
-        <ImageButton
-            android:id="@+id/btnNext"
+        <RelativeLayout
+            android:id="@+id/btnDown"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="6dp"
-            android:layout_marginBottom="8dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/arrows_16" />
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/arrows_down">
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/btnUp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/arrows_up">
+
+        </RelativeLayout>
     </RelativeLayout>
 </FrameLayout>
