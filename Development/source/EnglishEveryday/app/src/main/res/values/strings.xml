@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EnglishEveryday</string>
+    <string name="app_name">Flashcard Widget</string>
     <string name="setting">Settings</string>
     <string name="setting_text">The bellow references with apply for the widget</string>
     <string name="refresh_interval">Refresh Interval</string>

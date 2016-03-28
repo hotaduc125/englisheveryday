@@ -8,8 +8,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.8"
-        android:background="@drawable/old_page">
+        android:alpha="0.75"
+        android:background="@android:color/white">
 
         <TextView
             android:id="@+id/tvWord"

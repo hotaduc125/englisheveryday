@@ -225,6 +225,7 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
         Log.i("EEEEE", "widget was added to home screen");
         SessionManager sessionManager = new SessionManager(context);
         if (!sessionManager.isStartAlarmFromBegining()) {
+            Alarm.getInstance().cancelAlarm(context);
             Alarm.getInstance().setAlarm(context);
             sessionManager.setAlarmStart(true);
         }
