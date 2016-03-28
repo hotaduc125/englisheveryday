@@ -8,8 +8,6 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.support.v4.app.TaskStackBuilder;
@@ -145,8 +143,7 @@ public class EnglishWidgetProvider extends AppWidgetProvider {
         Notification notification = builder.setContentTitle(title)
                 .setContentText(Html.fromHtml(content))
                 .setTicker(ticker)
-//                .setLargeIcon(bitmap)
-                .setSmallIcon(R.drawable.noti_icon_1)
+                .setSmallIcon(R.drawable.ic_launcher)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(Html.fromHtml(content)))
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
