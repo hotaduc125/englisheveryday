@@ -20,6 +20,7 @@ public class SessionManager {
     private static final String ENABLE_NOTIFICATION = "notification";
     private static final String INDEX = "index";
     private static final String START_ALARM = "start_alarm";
+    private static final String APP_INSTALLED = "app_installed";
 
     public SessionManager(Context context) {
         this.context = context;
@@ -80,6 +81,15 @@ public class SessionManager {
 
     public void setNotification(boolean isEnabled) {
         editor.putBoolean(ENABLE_NOTIFICATION, isEnabled);
+        editor.commit();
+    }
+
+    public boolean isAppInstalled() {
+        return pref.getBoolean(APP_INSTALLED, false);
+    }
+
+    public void setAppInstalled(boolean isInstalled) {
+        editor.putBoolean(APP_INSTALLED, isInstalled);
         editor.commit();
     }
 }

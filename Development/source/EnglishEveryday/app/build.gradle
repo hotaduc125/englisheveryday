@@ -8,8 +8,8 @@ android {
         applicationId "com.me.englisheveryday"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 3
-        versionName "1.2"
+        versionCode 1
+        versionName "1.0"
         manifestPlaceholders = [HOCKEYAPP_APP_ID: "b51978828dd346cca264d7212f39e956"]
     }
     buildTypes {

@@ -104,8 +104,30 @@ public class SettingsActivity extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+        tvVersion.setText("English Flashcard Widget v." + pInfo.versionName);
+        if(!sessionManager.isAppInstalled()) {
+            addShortcut();
+            sessionManager.setAppInstalled(true);
+        }
+    }
 
-        tvVersion.setText("English Flashcard Widget v."+ pInfo.versionName);
+    /**
+     * Automatically adding app shortcut to home screen for the first time using the app.
+     */
+    private void addShortcut() {
+        Intent HomeScreenShortCut = new Intent(getApplicationContext(),
+                SettingsActivity.class);
+        HomeScreenShortCut.setAction(Intent.ACTION_MAIN);
+        HomeScreenShortCut.putExtra("duplicate", false);
+        //shortcutIntent is added with addIntent
+        Intent addIntent = new Intent();
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, HomeScreenShortCut);
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.app_name));
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+                Intent.ShortcutIconResource.fromContext(getApplicationContext(),
+                        R.drawable.ic_launcher));
+        addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+        getApplicationContext().sendBroadcast(addIntent);
     }
 
     @OnClick(R.id.intervalLayout)
@@ -208,12 +230,12 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.rateLayout)
-    public void rateApp(){
+    public void rateApp() {
 
     }
 
     @OnClick(R.id.tellMyFriendLayout)
-    public void tellMyFriends(){
+    public void tellMyFriends() {
         onShareClick(this);
     }
 
